@@ -1,0 +1,14 @@
+[package]
+name = "mugshots"
+version = "0.1.0"
+authors = ["Jason Graalum <jasongraalum@gmail.com>"]
+
+[dependencies]
+image = "*"
+#image = { git = "https://github.com/PistonDevelopers/image" }
+uuid = "*"
+chrono = "*"
+sha2 = { git = "https://github.com/RustCrypto/hashes.git" }
+digest = { version = "*", features = ["std"]}
+#generic-array = { git = "https://github.com/fizyk20/generic-array" }
+
