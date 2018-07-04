@@ -1,34 +1,29 @@
+//
 // Process a image file to add it to mugshots
 // Build the metadata
 //
 
-//extern crate sha2;
-//extern crate generic_array;
-//extern crate chrono;
-//extern crate uuid;
-//
-//extern crate image;
 
 //use std::env;
 use std::io;
 use std::io::prelude::*;
 use std::io::{Error, ErrorKind, SeekFrom};
 use std::fs::File;
-//use std::path::Path;
+use std::path::Path;
 
 //use image::*;
 //use image::GenericImage;
 
 use sha2::{Digest, Sha512};
 //use chrono::prelude::*;
-use std::ffi::OsString;
+//use std::ffi::OsString;
 
 //use std::fmt;
 
 //use uuid::Uuid;
 
 pub struct ImageData {
-    filename: OsString,
+    filename: String,
     hash: [u8; 64],
     thumbhash: [u8; 64],
     image_format: ::image::ImageFormat,
@@ -36,7 +31,6 @@ pub struct ImageData {
     //    last_mod: chrono::NaiveDateTime,
     //    xdim: i32,
     //    ydim: i32,
-    filepath: OsString,
 }
 
 static DEFAULT_IMAGE: &'static str = "/tmp/test.jpg";
@@ -84,6 +78,7 @@ impl ImageData {
                 &image_f.read(&mut buffer);
                 let image_type_result = ::image::guess_format(&buffer);
 
+                // Rewind and check for success
                 match image_f.seek(SeekFrom::Start(0)) {
                     Ok(_) => {}
                     Err(err) => return Err(err),
@@ -92,6 +87,7 @@ impl ImageData {
                 // Now check that we successfully checked the type
                 match image_type_result {
                     Ok(image_type) => {
+
                         // With good image type, generate the file hash
                         let hash_result = Sha512::digest_reader(&mut image_f);
 
@@ -100,15 +96,38 @@ impl ImageData {
                             Err(err) => {
                                 return Err(err);
                             }
+
                             Ok(hash_generic) => {
+                                //
+                                // Copy hash result from it's GenericArray of type <T: N>
+                                // to an array of u8
+                                //
                                 let mut hash_vals: [u8; 64] = [0; 64];
                                 hash_vals.copy_from_slice(hash_generic.as_slice());
+
+                                //
+                                // Get basefile name from input file
+                                //
+                                let base_filename_option = Path::new(&filename).file_name();
+                                let base_filename: String = match base_filename_option {
+                                    Some(bfn) => {
+                                        bfn.to_str().unwrap().to_string()
+                                    },
+                                    None =>  {
+                                        return Err(Error::new(
+                                                ErrorKind::InvalidInput,
+                                                format!("Invalid filename: {}", &filename),
+                                                ));
+                                    },
+                                };
+
+                                // 
+                                // Create ImageData struct
                                 let image_data = ImageData {
-                                    filename: OsString::from(&filename),
+                                    filename: base_filename, 
                                     hash: hash_vals,
                                     image_format: image_type,
                                     thumbhash: [0; 64],
-                                    filepath: OsString::from("temp"),
                                 };
                                 return Ok(image_data);
                             }
@@ -133,14 +152,19 @@ impl ImageData {
 }
 
 #[test]
-fn test_default_image() {
-    let new_image = ImageData::load_file(DEFAULT_IMAGE);
+fn test_default1_image() {
+    let new_image_result = ImageData::load_file(DEFAULT_IMAGE);
+
+    let new_image : ImageData = match new_image_result {
+        Ok(new_image) => new_image,
+        Err(_) =>  { assert!(false); return },
+    };
 
     //
     // Need to split the arrays in to two x32 as Eq is not implements for [u8; 64]
     // and I'm too lazy to create it(yet)!
     //
-    let hash = new_image.unwrap().hash;
+    let hash = new_image.hash;
     let hash_0_31 = &hash[0..32];
     let hash_32_63 = &hash[32..64];
 
@@ -156,12 +180,58 @@ fn test_default_image() {
 
     assert_eq!(hash_0_31, bytes_0_31);
     assert_eq!(hash_32_63, bytes_32_63);
+    assert_eq!(new_image.filename,"test.jpg");
 
-    let new_image = ImageData::load_default();
-    let hash = new_image.unwrap().hash;
+}
+#[test]
+fn test_default2_image() {
+    let new_image_result = ImageData::load_default();
+
+    let new_image : ImageData = match new_image_result {
+        Ok(new_image) => new_image,
+        Err(_) =>  { assert!(false); return },
+    };
+
+    //
+    // Need to split the arrays in to two x32 as Eq is not implements for [u8; 64]
+    // and I'm too lazy to create it(yet)!
+    //
+    let hash = new_image.hash;
+    let hash_0_31 = &hash[0..32];
+    let hash_32_63 = &hash[32..64];
+
+    let bytes_0_31 = [
+        64, 207, 131, 132, 162, 80, 98, 188, 207, 222, 91, 54, 229, 110, 198, 56, 46, 69, 51, 241,
+        51, 5, 187, 46, 222, 88, 41, 119, 210, 189, 114, 199,
+    ];
+
+    let bytes_32_63 = [
+        17, 38, 201, 142, 107, 40, 229, 31, 202, 211, 15, 78, 118, 243, 143, 138, 254, 42, 89, 227,
+        188, 9, 89, 11, 167, 250, 38, 170, 116, 95, 205, 35,
+    ];
+
+    assert_eq!(hash_0_31, bytes_0_31);
+    assert_eq!(hash_32_63, bytes_32_63);
+    assert_eq!(new_image.filename,"test.jpg");
+
+}
+
+/*
+#[test]
+fn test_default1_image() {
+    let new_image_result = ImageData::load_default();
+
+    let new_image : ImageData = match new_image_result {
+        Ok(new_image) => new_image,
+        Err(_) =>  { assert!(false); },
+    };
+
+    let hash = new_image.hash;
     let hash_0_31 = &hash[0..32];
     let hash_32_63 = &hash[32..64];
 
     assert_eq!(hash_0_31, bytes_0_31);
     assert_eq!(hash_32_63, bytes_32_63);
+    assert_eq!(new_image.filename,"test.jpg");
 }
+*/
