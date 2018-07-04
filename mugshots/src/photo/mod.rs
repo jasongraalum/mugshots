@@ -11,8 +11,8 @@ use std::io::{Error, ErrorKind, SeekFrom};
 use std::fs::File;
 use std::path::Path;
 
-//use image::*;
-//use image::GenericImage;
+use image;
+use image::{GenericImage,ImageError};
 
 use sha2::{Digest, Sha512};
 //use chrono::prelude::*;
@@ -28,10 +28,10 @@ pub struct ImageData {
     hash: [u8; 64],
     thumbhash: [u8; 64],
     image_format: ::image::ImageFormat,
-    //    ts: chrono::NaiveDateTime,
     added_ts: DateTime<Utc>,
     last_mod_ts: DateTime<Utc>,
-    //    xdim: i32,
+    dim: (u32, u32),
+    //    ts: chrono::NaiveDateTime,
     //    ydim: i32,
 }
 
@@ -125,14 +125,25 @@ impl ImageData {
 
                                 // 
                                 // Create ImageData struct
-                                let image_data = ImageData {
+                                let mut image_data = ImageData {
                                     filename: base_filename, 
                                     hash: hash_vals,
                                     image_format: image_type,
                                     thumbhash: [0; 64],
                                     added_ts: Utc::now(),
-                                    last_mod_ts: Utc::now()
+                                    last_mod_ts: Utc::now(),
+                                    dim: (0,0),
                                 };
+
+                                let image_result = image::open(Path::new(&filename));
+                                match image_result {
+                                    Ok(image) => {
+                                        image_data.dim = image.dimensions();
+                                    },
+                                    Err(err) => {
+                                        return Err(Error::new(ErrorKind::InvalidData,format!("{}",err)));
+                                    }
+                                }
                                 return Ok(image_data);
                             }
                         }
