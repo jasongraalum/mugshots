@@ -171,11 +171,16 @@ impl ImageData {
     }
 }
 
+//
+// Combined all tests to remove overhead of opening the image file multiple times
+// Todo is to optimize opening image file - do we need to read the whole image into memory
+// if we only need the meta data??
+//
 #[test]
-fn test_default1_image() {
+fn test_imagedata_construction() {
     let new_image_result = ImageData::load_file(DEFAULT_IMAGE);
 
-    let new_image : ImageData = match new_image_result {
+    let mut new_image : ImageData = match new_image_result {
         Ok(new_image) => new_image,
         Err(_) =>  { assert!(false); return },
     };
@@ -202,8 +207,24 @@ fn test_default1_image() {
     assert_eq!(hash_32_63, bytes_32_63);
     assert_eq!(new_image.filename,"test.jpg");
 
+    let dt_utc: DateTime<Utc> = Utc::now(); 
+
+    println!("\nImage Struct: added_ts error");
+    println!("last_mod_ts = {}",new_image.added_ts);
+    println!("now = {}\n",dt_utc);
+    assert!(dt_utc > new_image.added_ts);
+
+    new_image.update_mod_time();
+
+    println!("\nImage Struct: update mode time error");
+    println!("last_mod_ts = {}",new_image.last_mod_ts);
+    println!("now = {}\n",dt_utc);
+    assert!(dt_utc < new_image.last_mod_ts);
+
+    assert_eq!(new_image.dim, (3264, 2448));
 }
-#[test]
+
+
 fn test_default2_image() {
     let new_image_result = ImageData::load_default();
 
@@ -214,8 +235,7 @@ fn test_default2_image() {
 
     //
     // Need to split the arrays in to two x32 as Eq is not implements for [u8; 64]
-    // and I'm too lazy to create it(yet)!
-    //
+    // and I'm too lazy to create it(yet)!  
     let hash = new_image.hash;
     let hash_0_31 = &hash[0..32];
     let hash_32_63 = &hash[32..64];
@@ -235,37 +255,3 @@ fn test_default2_image() {
     assert_eq!(new_image.filename,"test.jpg");
 }
 
-#[test]
-fn test_add_datetime() {
-    let new_image_result = ImageData::load_default();
-
-    let new_image : ImageData = match new_image_result {
-        Ok(new_image) => new_image,
-        Err(_) =>  { assert!(false); return },
-    };
-
-    let dt_utc: DateTime<Utc> = Utc::now(); 
-    
-    println!("\nImage Struct: added_ts error");
-    println!("last_mod_ts = {}",new_image.added_ts);
-    println!("now = {}\n",dt_utc);
-    assert!(dt_utc > new_image.added_ts);
-}
-
-#[test]
-fn test_update_mod_time() {
-    let new_image_result = ImageData::load_default();
-
-    let mut new_image : ImageData = match new_image_result {
-        Ok(new_image) => new_image,
-        Err(_) =>  { assert!(false); return },
-    };
-
-    let dt_utc: DateTime<Utc> = Utc::now(); 
-    new_image.update_mod_time();
-
-    println!("\nImage Struct: update mode time error");
-    println!("last_mod_ts = {}",new_image.last_mod_ts);
-    println!("now = {}\n",dt_utc);
-    assert!(dt_utc < new_image.last_mod_ts);
-}
