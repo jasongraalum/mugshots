@@ -7,7 +7,7 @@ authors = ["Jason Graalum <jasongraalum@gmail.com>"]
 image = "*"
 #image = { git = "https://github.com/PistonDevelopers/image" }
 uuid = "*"
-chrono = "*"
+chrono = "0.4"
 sha2 = { git = "https://github.com/RustCrypto/hashes.git" }
 digest = { version = "*", features = ["std"]}
 #generic-array = { git = "https://github.com/fizyk20/generic-array" }

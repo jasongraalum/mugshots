@@ -16,6 +16,7 @@ use std::path::Path;
 
 use sha2::{Digest, Sha512};
 //use chrono::prelude::*;
+use chrono::{DateTime, Utc};
 //use std::ffi::OsString;
 
 //use std::fmt;
@@ -27,8 +28,9 @@ pub struct ImageData {
     hash: [u8; 64],
     thumbhash: [u8; 64],
     image_format: ::image::ImageFormat,
-    //    timestamp: chrono::NaiveDateTime,
-    //    last_mod: chrono::NaiveDateTime,
+    //    ts: chrono::NaiveDateTime,
+    added_ts: DateTime<Utc>,
+    last_mod_ts: DateTime<Utc>,
     //    xdim: i32,
     //    ydim: i32,
 }
@@ -128,6 +130,8 @@ impl ImageData {
                                     hash: hash_vals,
                                     image_format: image_type,
                                     thumbhash: [0; 64],
+                                    added_ts: Utc::now(),
+                                    last_mod_ts: Utc::now()
                                 };
                                 return Ok(image_data);
                             }
@@ -148,6 +152,11 @@ impl ImageData {
                 ));
             }
         }
+    }
+
+    fn update_mod_time(&mut self)
+    {
+        self.last_mod_ts = Utc::now(); 
     }
 }
 
@@ -213,25 +222,39 @@ fn test_default2_image() {
     assert_eq!(hash_0_31, bytes_0_31);
     assert_eq!(hash_32_63, bytes_32_63);
     assert_eq!(new_image.filename,"test.jpg");
-
 }
 
-/*
 #[test]
-fn test_default1_image() {
+fn test_add_datetime() {
     let new_image_result = ImageData::load_default();
 
     let new_image : ImageData = match new_image_result {
         Ok(new_image) => new_image,
-        Err(_) =>  { assert!(false); },
+        Err(_) =>  { assert!(false); return },
     };
 
-    let hash = new_image.hash;
-    let hash_0_31 = &hash[0..32];
-    let hash_32_63 = &hash[32..64];
-
-    assert_eq!(hash_0_31, bytes_0_31);
-    assert_eq!(hash_32_63, bytes_32_63);
-    assert_eq!(new_image.filename,"test.jpg");
+    let dt_utc: DateTime<Utc> = Utc::now(); 
+    
+    println!("\nImage Struct: added_ts error");
+    println!("last_mod_ts = {}",new_image.added_ts);
+    println!("now = {}\n",dt_utc);
+    assert!(dt_utc > new_image.added_ts);
 }
-*/
+
+#[test]
+fn test_update_mod_time() {
+    let new_image_result = ImageData::load_default();
+
+    let mut new_image : ImageData = match new_image_result {
+        Ok(new_image) => new_image,
+        Err(_) =>  { assert!(false); return },
+    };
+
+    let dt_utc: DateTime<Utc> = Utc::now(); 
+    new_image.update_mod_time();
+
+    println!("\nImage Struct: update mode time error");
+    println!("last_mod_ts = {}",new_image.last_mod_ts);
+    println!("now = {}\n",dt_utc);
+    assert!(dt_utc < new_image.last_mod_ts);
+}
