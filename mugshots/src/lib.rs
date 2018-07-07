@@ -9,21 +9,23 @@
 
 //
 // Sub module for all functions related to photo manipulations
-// including creation and modificaiton of metadata to be stored
+// including creation and modification of metadata to be stored
 // in the database
 //
 
 extern crate chrono;
 extern crate uuid;
 extern crate image;
-extern crate sha2; 
-
+extern crate sha2;
+#[macro_use]
+extern crate arrayref;
 //
 // Crypto Functions to create hash of images
 //
 //
 
-mod photo;
+pub mod photo;
+pub mod library;
 
 //
 // Submodule for all functions related to database interface
