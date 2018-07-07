@@ -5,10 +5,11 @@
 
 use std;
 use std::io;
-//use std::io::prelude::*;
+use std::io::prelude::*;
 use std::io::{Read, Error, ErrorKind, SeekFrom};
 use std::fs;
-use std::path::Path;
+use std::fs::{File};
+use std::path::{Path,PathBuf};
 
 
 use std::ffi::OsString;
@@ -79,16 +80,31 @@ impl ImageLibrary {
         }
 
         let library_filename = name + "."  + LIB_EXTENSION;
-        let full_file_path: OsString  = OsString::from(directory_path.to_str().unwrap().clone());
+        let library_path_os: OsString  = OsString::from(directory_path.to_str().unwrap().clone());
+        let library_path_str: String  = String::from(directory_path.to_str().unwrap().clone());
 
         let library_dir: &Path = Path::new(directory_path);
 
         // Write Library Meta Data to library directory
         // Check for existing metadata file
+        let mut meta_file = PathBuf::from(&library_path_os);
+        meta_file.push(&library_filename);
 
+        if meta_file.exists() {
+            return Err(Error::new(
+                ErrorKind::InvalidInput,
+                format!("MugShots library already exists"),
+            ));
+        }
 
+        println!("meta_file = {:?}", meta_file);
 
-        Ok(ImageLibrary { name: library_filename,  directory: full_file_path, image_count: 0, image_tree: BTreeMap::new() })
+        let mut meta_f =  File::create(meta_file)?;
+        meta_f.write_fmt(format_args!("name : {}\n", &library_filename))?;
+        meta_f.write_fmt(format_args!("directory : {}\n", library_path_str))?;
+        meta_f.write_fmt(format_args!("image_count : 0\n"))?;
+
+        Ok(ImageLibrary { name: library_filename,  directory: library_path_os, image_count: 0, image_tree: BTreeMap::new() })
     }
 }
 
