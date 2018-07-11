@@ -1,3 +1,6 @@
+///
+/// Copyright © 2018 Jason Graalum
+///
 use sha2::{Digest, Sha256};
 use std::fs::File;
 use std::io::Result;

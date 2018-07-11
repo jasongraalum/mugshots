@@ -1,3 +1,6 @@
+///
+/// Copyright © 2018 Jason Graalum
+///
 //
 // Process a image file to add it to mugshots
 // Build the metadata
@@ -6,11 +9,10 @@
 use std;
 use std::io;
 use std::io::prelude::*;
-use std::io::{Read, Error, ErrorKind, SeekFrom};
+use std::io::{Error, ErrorKind, Read, SeekFrom};
 use std::fs;
-use std::fs::{File};
-use std::path::{Path,PathBuf};
-
+use std::fs::File;
+use std::path::{Path, PathBuf};
 
 use std::ffi::OsString;
 //use image;
@@ -22,18 +24,17 @@ use std::ffi::OsString;
 use std::collections::BTreeMap;
 use photo::ImageData;
 
-const LIB_EXTENSION : &str = "mgst";
+const LIB_EXTENSION: &str = "mgst";
 
 pub struct ImageLibrary {
     name: String,
     directory: OsString,
     image_count: u32,
-    image_tree: std::collections::BTreeMap< u8, ImageData>,
+    image_tree: std::collections::BTreeMap<u8, ImageData>,
 }
 
 impl ImageLibrary {
-    pub fn create(name: String, directory_name : String) -> io::Result<ImageLibrary>
-    {
+    pub fn create(name: String, directory_name: String) -> io::Result<ImageLibrary> {
         //
         // Check that name is a valid file name in directory
         // If not, either directory doesn't exist, isn't writable or there
@@ -54,9 +55,14 @@ impl ImageLibrary {
         }
 
         if (&directory_path).exists() == false {
-
-            println!("The target library directory does not exist: {}", directory_name);
-            println!("Would you like to create: {:?} (y/n)?", &directory_path.to_str());
+            println!(
+                "The target library directory does not exist: {}",
+                directory_name
+            );
+            println!(
+                "Would you like to create: {:?} (y/n)?",
+                &directory_path.to_str()
+            );
 
             let yn_input_option: Option<char> = std::io::stdin()
                 .bytes()
@@ -74,14 +80,17 @@ impl ImageLibrary {
             }
 
             match fs::create_dir_all(&directory_path) {
-                Ok(_) => println!("Library directory created: {:?}", &directory_path.canonicalize().unwrap()),
-                Err(err) => return Err(err)
+                Ok(_) => println!(
+                    "Library directory created: {:?}",
+                    &directory_path.canonicalize().unwrap()
+                ),
+                Err(err) => return Err(err),
             }
         }
 
-        let library_filename = name + "."  + LIB_EXTENSION;
-        let library_path_os: OsString  = OsString::from(directory_path.to_str().unwrap().clone());
-        let library_path_str: String  = String::from(directory_path.to_str().unwrap().clone());
+        let library_filename = name + "." + LIB_EXTENSION;
+        let library_path_os: OsString = OsString::from(directory_path.to_str().unwrap().clone());
+        let library_path_str: String = String::from(directory_path.to_str().unwrap().clone());
 
         let library_dir: &Path = Path::new(directory_path);
 
@@ -99,19 +108,30 @@ impl ImageLibrary {
 
         println!("meta_file = {:?}", meta_file);
 
-        let mut meta_f =  File::create(meta_file)?;
+        let mut meta_f = File::create(meta_file)?;
         meta_f.write_fmt(format_args!("name : {}\n", &library_filename))?;
         meta_f.write_fmt(format_args!("directory : {}\n", library_path_str))?;
         meta_f.write_fmt(format_args!("image_count : 0\n"))?;
 
-        Ok(ImageLibrary { name: library_filename,  directory: library_path_os, image_count: 0, image_tree: BTreeMap::new() })
+        Ok(ImageLibrary {
+            name: library_filename,
+            directory: library_path_os,
+            image_count: 0,
+            image_tree: BTreeMap::new(),
+        })
+    }
+
+    pub fn add_image(filename: String) {
+        let new_image_result = ImageData::load_file(&filename);
     }
 }
 
 #[test]
-fn test_new_imagelibrary()
-{
-    let new_library : ImageLibrary = ImageLibrary::create("testLibrary".to_string(),"./test/testLibraries".to_string()).unwrap();
+fn test_new_imagelibrary() {
+    let new_library: ImageLibrary = ImageLibrary::create(
+        "testLibrary".to_string(),
+        "./test/testLibraries".to_string(),
+    ).unwrap();
     let name = "testLibrary.".to_string() + LIB_EXTENSION;
-    assert_eq!(new_library.name,name);
+    assert_eq!(new_library.name, name);
 }

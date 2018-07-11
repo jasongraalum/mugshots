@@ -1,3 +1,6 @@
+///
+/// Copyright © 2018 Jason Graalum
+///
 //
 // Process a image file to add it to mugshots
 // Build the metadata
@@ -28,6 +31,7 @@ pub struct ImageData {
     added_ts: DateTime<Utc>,
     last_mod_ts: DateTime<Utc>,
     dim: (u32, u32),
+    tags: Box<Vec<String>>,
 }
 
 impl ImageData {
@@ -102,6 +106,7 @@ impl ImageData {
             added_ts: Utc::now(),
             last_mod_ts: Utc::now(),
             dim: (0, 0),
+            tags: Box::new(Vec::new()),
         };
 
         let image_result = image::open(Path::new(&filename));
@@ -123,6 +128,8 @@ impl ImageData {
     {
         self.last_mod_ts = Utc::now();
     }
+
+    fn add_tag(&mut self, new_tag: String) { self.tags.push(new_tag); }
 }
 
 //
@@ -133,8 +140,7 @@ impl ImageData {
 #[test]
 fn test_imagedata_construction() {
     let test_image_file = "test/jpg/test1.jpg".to_string();
-let new_image_result = ImageData::load_file(&test_image_file);
-
+    let new_image_result = ImageData::load_file(&test_image_file);
 
     let mut new_image: ImageData = match new_image_result {
         Ok(new_image) => new_image,
@@ -172,6 +178,8 @@ let new_image_result = ImageData::load_file(&test_image_file);
     assert!(dt_utc < new_image.last_mod_ts);
 
     assert_eq!(new_image.dim, (3264, 2448));
+
+    new_image.add_tag("test tag".to_string());
 }
 
 

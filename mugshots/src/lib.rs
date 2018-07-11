@@ -1,3 +1,8 @@
+#[macro_use]
+extern crate arrayref;
+///
+/// Copyright © 2018 Jason Graalum
+///
 //
 // mugshots Library
 //
@@ -12,13 +17,10 @@
 // including creation and modification of metadata to be stored
 // in the database
 //
-
 extern crate chrono;
-extern crate uuid;
 extern crate image;
 extern crate sha2;
-#[macro_use]
-extern crate arrayref;
+extern crate uuid;
 //
 // Crypto Functions to create hash of images
 //
@@ -44,7 +46,6 @@ pub mod library;
 //
 //mod interface;
 
-
 #[cfg(test)]
 mod tests {
     #[test]
@@ -52,4 +53,3 @@ mod tests {
         assert_eq!(2 + 2, 4);
     }
 }
-
