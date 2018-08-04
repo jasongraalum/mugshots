@@ -1,7 +1,5 @@
 //Copyright (c) 2018 Jason Graalum
 // Using https://github.com/utkarshkukreti/select.rs
-extern crate reqwest;
-extern crate html5ever;
 
 use std::io;
 use std::default::Default;
@@ -11,7 +9,7 @@ use html5ever::tokenizer::{CharacterTokens, NullCharacterToken, TagToken, StartT
 use html5ever::tokenizer::BufferQueue;
 use html5ever::tendril::*;
 
-use reqwest::Url;
+use reqwest::{self,Url};
 
 //pub fn crawl<A, F>(start_url : url::Url, mut f : F ) -> Result<A,&str>
 pub fn crawl(start_url: Url) -> Vec<Url> {
