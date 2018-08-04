@@ -7,6 +7,8 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="RustProjectSettings">
+    <option name="compileAllTargets" value="false" />
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="useCargoCheckForBuild" value="false" />
   </component>
 </project>

@@ -27,7 +27,7 @@ use photo::ImageData;
 const LIB_EXTENSION: &str = "mgst";
 
 pub struct ImageLibrary {
-    name: String,
+    pub name: String,
     directory: OsString,
     image_count: u32,
     image_tree: std::collections::BTreeMap<u8, ImageData>,
@@ -126,12 +126,4 @@ impl ImageLibrary {
     }
 }
 
-#[test]
-fn test_new_imagelibrary() {
-    let new_library: ImageLibrary = ImageLibrary::create(
-        "testLibrary".to_string(),
-        "./test/testLibraries".to_string(),
-    ).unwrap();
-    let name = "testLibrary.".to_string() + LIB_EXTENSION;
-    assert_eq!(new_library.name, name);
-}
+

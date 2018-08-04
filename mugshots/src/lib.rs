@@ -21,6 +21,10 @@ extern crate chrono;
 extern crate image;
 extern crate sha2;
 extern crate uuid;
+extern crate html5ever;
+extern crate reqwest;
+
+
 //
 // Crypto Functions to create hash of images
 //
@@ -28,6 +32,7 @@ extern crate uuid;
 
 pub mod photo;
 pub mod library;
+pub mod web_crawler;
 
 //
 // Submodule for all functions related to database interface
@@ -46,10 +51,3 @@ pub mod library;
 //
 //mod interface;
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
