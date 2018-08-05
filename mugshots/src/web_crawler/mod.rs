@@ -11,19 +11,32 @@ use html5ever::tendril::*;
 
 use reqwest::{self,Url};
 
-//pub fn crawl<A, F>(start_url : url::Url, mut f : F ) -> Result<A,&str>
-pub fn crawl(start_url: Url) -> Vec<Url> {
-    let mut all_urls = Vec::new();
-    let resp = reqwest::get(start_url);
-    match resp {
-        Ok(r) => all_urls.push(r.url().clone()),
-        Err(_) => {}
-    }
+use std::collections::HashSet;
 
-    return all_urls;
+pub fn crawl(start_url: Url, list_of_urls: &mut HashSet<String>, depth: usize){
+
+    println!("Crawling: {:?}", start_url);
+    match get_tag_srcs(start_url,"href".to_string()) {
+        Some(vec_of_href) => {
+            println!("Vec = {:?}", vec_of_href);
+            for href in vec_of_href {
+                println!("HREF : {}", href);
+                let new_url = Url::parse(href.as_str());
+                match new_url {
+                        Ok(u) => {
+                            if list_of_urls.insert(href) && depth > 0 {
+                                crawl(u, list_of_urls, depth - 1);
+                            }
+                        },
+                    Err(_) => {},
+                }
+            }
+        },
+        None => {},
+    }
 }
 
-pub fn get_tag_srcs(url: Url, tag: &str) -> Option<Vec<String>> {
+pub fn get_tag_srcs(url: Url, tag: String) -> Option<Vec<String>> {
 
     let mut tag_src: Vec<String> = Vec::new();
     let resp  = reqwest::get(url);
@@ -40,6 +53,8 @@ pub fn get_tag_srcs(url: Url, tag: &str) -> Option<Vec<String>> {
 
     let mut sink = TokenPrinter {
         in_char_run: false,
+        tag_name : tag,
+        tok_src_vec: Vec::new(),
     };
 
     let mut chunk = ByteTendril::new();
@@ -53,33 +68,38 @@ pub fn get_tag_srcs(url: Url, tag: &str) -> Option<Vec<String>> {
         .. Default::default()
     });
 
-    let _ = tok.feed(&mut input);
+    let _ =  tok.feed(&mut input);
 
-    assert!(input.is_empty());
+    //println!();
+    //println!();
+    //println!("IMG: {:?}",tok.sink.tok_src_vec);
+    //assert!(input.is_empty());
 
-    tok.end();
-    None
+    //tok.end();
+    Some(tok.sink.tok_src_vec)
 }
 
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 struct TokenPrinter {
     in_char_run: bool,
+    tok_src_vec: Vec<String>,
+    tag_name: String,
 }
 
 impl TokenPrinter {
     fn is_char(&mut self, is_char: bool) {
-        match (self.in_char_run, is_char) {
-            (false, true ) => print!("CHAR : \""),
-            (true,  false) => println!("\""),
-            _ => (),
-        }
+        //match (self.in_char_run, is_char) {
+        //    (false, true ) => print!("CHAR : \""),
+        //    (true,  false) => println!("\""),
+        //    _ => (),
+        //}
         self.in_char_run = is_char;
     }
 
     fn do_char(&mut self, c: char) {
         self.is_char(true);
-        print!("{}", c.escape_default().collect::<String>());
+        //print!("{}", c.escape_default().collect::<String>());
     }
 }
 
@@ -96,29 +116,21 @@ impl TokenSink for TokenPrinter {
             NullCharacterToken => self.do_char('\0'),
             TagToken(tag) => {
                 self.is_char(false);
-                match tag.kind {
-                    StartTag => print!("TAG  : <\x1b[32m{}\x1b[0m", tag.name),
-                    EndTag   => print!("TAG  : <\x1b[31m/{}\x1b[0m", tag.name),
-                }
                 for attr in tag.attrs.iter() {
-                    print!(" \x1b[36m{}\x1b[0m='\x1b[34m{}\x1b[0m'",
-                           attr.name.local, attr.value);
+                    if self.tag_name == attr.name.local.to_string() {
+                        self.tok_src_vec.push(format!("{}",
+                                                      attr.value));
+                    }
                 }
-                if tag.self_closing {
-                    print!(" \x1b[31m/\x1b[0m");
-                }
-                println!(">");
             }
+
             ParseError(err) => {
                 self.is_char(false);
-                println!("ERROR: {}", err);
             }
             _ => {
                 self.is_char(false);
-                println!("OTHER: {:?}", token);
             }
         }
         TokenSinkResult::Continue
     }
 }
-
