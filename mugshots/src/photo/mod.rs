@@ -11,14 +11,14 @@ pub mod image_hash;
 use self::image_hash::ImageHash;
 
 use std::io;
-use std::env;
+//use std::env;
 use std::io::prelude::*;
 use std::io::{Error, ErrorKind, SeekFrom};
 use std::fs::File;
 use std::path::Path;
 
 use image;
-use image::{GenericImage, ImageError};
+use image::{GenericImage};
 
 
 use chrono::{DateTime, Utc};
@@ -75,7 +75,7 @@ impl ImageData {
         let image_type_result = ::image::guess_format(&buffer);
         let image_type = match image_type_result {
             Ok(image_type) => image_type,
-            Err(err) => {
+            Err(_) => {
                 return Err(Error::new(
                     ErrorKind::InvalidInput,
                     format!("Invalid filename: {}", &filename),
@@ -123,7 +123,7 @@ impl ImageData {
 
         let image_result = image::open(Path::new(&filename));
         let image = match image_result {
-            Err(err) => {
+            Err(_err) => {
                 return Err(Error::new(
                     ErrorKind::InvalidInput,
                     format!("Unable to open {} as image.", &filename),

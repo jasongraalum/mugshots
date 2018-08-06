@@ -9,7 +9,7 @@
 use std;
 use std::io;
 use std::io::prelude::*;
-use std::io::{Error, ErrorKind, Read, SeekFrom};
+use std::io::{Error, ErrorKind, Read};
 use std::fs;
 use std::fs::File;
 use std::path::{Path, PathBuf};
@@ -42,7 +42,7 @@ impl ImageLibrary {
         //
 
         // Does directory exist, if not can I create it?
-        let mut directory_path = Path::new(&directory_name);
+        let directory_path = Path::new(&directory_name);
 
         //
         // If directory name is a file, error out
@@ -70,7 +70,7 @@ impl ImageLibrary {
                 .and_then(|result| result.ok())
                 .map(|byte| byte as char);
 
-            let mut yn_input = yn_input_option.unwrap();
+            let yn_input = yn_input_option.unwrap();
 
             if yn_input.to_ascii_lowercase() != 'y' {
                 return Err(Error::new(
@@ -92,7 +92,7 @@ impl ImageLibrary {
         let library_path_os: OsString = OsString::from(directory_path.to_str().unwrap().clone());
         let library_path_str: String = String::from(directory_path.to_str().unwrap().clone());
 
-        let library_dir: &Path = Path::new(directory_path);
+        //let library_dir: &Path = Path::new(directory_path);
 
         // Write Library Meta Data to library directory
         // Check for existing metadata file
@@ -122,7 +122,7 @@ impl ImageLibrary {
     }
 
     pub fn add_image(filename: String) {
-        let new_image_result = ImageData::load_file(&filename);
+        ImageData::load_file(&filename);
     }
 }
 
