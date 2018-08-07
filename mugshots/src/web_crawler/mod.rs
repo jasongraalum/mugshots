@@ -2,6 +2,8 @@
 // Using https://github.com/utkarshkukreti/select.rs <- turned out to be less than stable
 // Using html5ever and reqwest crates
 
+use web_map::WebMap;
+
 //use std::io;
 use std::default::Default;
 
@@ -10,7 +12,9 @@ use html5ever::tokenizer::{CharacterTokens, NullCharacterToken, TagToken};
 use html5ever::tokenizer::BufferQueue;
 use html5ever::tendril::*;
 
-use reqwest::{self,Url};
+use reqwest::{self,StatusCode};
+use url::Url;
+
 
 use std::collections::HashSet;
 
@@ -20,47 +24,30 @@ use std::collections::HashSet;
 // finds any href's and saves the target in the list_of_urls hash
 // This should be combined with get_tag_srcs
 //
-pub fn crawl(start_url: Url, list_of_urls: &mut HashSet<String>, depth: usize){
+pub fn crawl(start_url: Url) ->  Result<WebMap, &'static str> {
+
+    let webmap = WebMap::new();
 
     println!("Crawling: {:?}", start_url);
-    match get_tag_srcs(start_url,"href".to_string()) {
-        Some(vec_of_href) => {
-            println!("Vec = {:?}", vec_of_href);
-            for href in vec_of_href {
-                println!("HREF : {}", href);
-                let new_url = Url::parse(href.as_str());
-                match new_url {
-                        Ok(u) => {
-                            if list_of_urls.insert(href) && depth > 0 {
-                                crawl(u, list_of_urls, depth - 1);
-                            }
-                        },
-                    Err(_) => {},
-                }
-            }
-        },
-        None => {},
-    }
-}
 
-pub fn get_tag_srcs(url: Url, tag: String) -> Option<Vec<String>> {
-    //let tag_src: Vec<String> = Vec::new();
-    let resp  = reqwest::get(url);
-    let resp_text: String;
-    match resp {
-        Ok(mut r) => {
-            resp_text = match r.text() {
+    let mut resp  = reqwest::get(start_url).unwrap();
+
+    let mut resp_text : String = " ".to_string();
+    match resp.status() {
+        StatusCode::Ok => {
+            resp_text = match resp.text() {
                 Ok(t) => t,
-                Err(_) => "Error in text".to_string(),
+                Err(e) => return Err("Error on text parse"),
             };
-        }
-        Err(_) => resp_text = "Error in response".to_string(),
+        },
+        StatusCode::MovedPermanently => {},
+        StatusCode::Forbidden => {},
+        _ => {},
     }
 
-    let sink = TokenPrinter {
-        in_char_run: false,
-        tag_name : tag,
-        tok_src_vec: Vec::new(),
+    let sink = TokenParse {
+        webmap: webmap,
+        tag_name_attr_pairs: Vec::new(),
     };
 
     let mut chunk = ByteTendril::new();
@@ -76,67 +63,48 @@ pub fn get_tag_srcs(url: Url, tag: String) -> Option<Vec<String>> {
 
     let _ =  tok.feed(&mut input);
 
-    //println!();
-    //println!();
-    //println!("IMG: {:?}",tok.sink.tok_src_vec);
-    //assert!(input.is_empty());
+    return Ok(tok.sink.webmap);
+}
 
-    //tok.end();
-    Some(tok.sink.tok_src_vec)
+pub fn get_tag_srcs(url: Url, tag: String) -> Option<Vec<String>> {
+    //let tag_src: Vec<String> = Vec::new();
+    println!("Getting {} tags from {:?}", tag, url);
+
+    /*
+    */
+
+    //Some(tok.sink.tok_src_vec)
+    None
 }
 
 
 #[derive(Clone)]
-struct TokenPrinter {
-    in_char_run: bool,
-    tok_src_vec: Vec<String>,
-    tag_name: String,
+struct TokenParse {
+    webmap: WebMap,
+    tag_name_attr_pairs: Vec<(String, String)>,
 }
 
-impl TokenPrinter {
-    //fn is_char(&mut self, is_char: bool) {
-        //match (self.in_char_run, is_char) {
-        //    (false, true ) => print!("CHAR : \""),
-        //    (true,  false) => println!("\""),
-        //    _ => (),
-        //}
-    //    self.in_char_run = is_char;
-    //}
 
-    //fn do_char(&mut self, c: char) {
-    //    self.is_char(true);
-        //print!("{}", c.escape_default().collect::<String>());
-    //}
-}
-
-impl TokenSink for TokenPrinter {
+// Use the TokenSink Trait from the html5ever crate
+impl TokenSink for TokenParse {
     type Handle = ();
-
     fn process_token(&mut self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
         match token {
-            CharacterTokens(_) => {
-                //for c in b.chars() {
-                //    self.do_char(c);
-               // }
-            }
-            NullCharacterToken => {},//self.do_char('\0'),
             TagToken(tag) => {
-                //self.is_char(false);
                 for attr in tag.attrs.iter() {
-                    if self.tag_name == attr.name.local.to_string() {
-                        self.tok_src_vec.push(format!("{}",
-                                                      attr.value));
+                    let tag_name : String = tag.name.get(0..).unwrap().to_string();
+                    let attr_name : String = attr.name.local.get(0..).unwrap().to_string();
+                    let attr_val : String = attr.value.get(0..).unwrap().to_string();
+
+                    if self.tag_name_attr_pairs.contains(&(tag_name, attr_name)) {
+                        let new_url = Url::parse(&attr_val).unwrap();
+                        self.webmap.insert_page(new_url);
                     }
                 }
             }
-
-            ParseError(_) => {
-                //self.is_char(false);
-            }
-            _ => {
-                //self.is_char(false);
-            }
+            _ => {},
         }
+
         TokenSinkResult::Continue
     }
 }

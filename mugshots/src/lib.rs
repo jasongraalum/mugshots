@@ -23,6 +23,7 @@ extern crate sha2;
 extern crate uuid;
 extern crate html5ever;
 extern crate reqwest;
+extern crate url;
 
 
 //
@@ -33,6 +34,7 @@ extern crate reqwest;
 pub mod photo;
 pub mod library;
 pub mod web_crawler;
+pub mod web_map;
 
 //
 // Submodule for all functions related to database interface
