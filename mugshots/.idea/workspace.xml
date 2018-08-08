@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b23abdc0-f4ae-4d70-8855-c5a43298c716" name="Default" comment="Major updates to include a web_map module. This is now included in the web_crawler - which builds a web_map object.">
+    <list default="true" id="b23abdc0-f4ae-4d70-8855-c5a43298c716" name="Default" comment="Working test with new WebMap, Node - but changed to use references to HashTable">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web_crawler/mod.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web_map/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/web_map/mod.rs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -59,15 +57,15 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="rs" value="70137" />
+          <entry key="rs" value="72072" />
           <entry key="toml" value="95" />
-          <entry key="txt" value="763" />
+          <entry key="txt" value="849" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="763" />
-          <entry key="Rust" value="70137" />
+          <entry key="PLAIN_TEXT" value="849" />
+          <entry key="Rust" value="72072" />
           <entry key="TOML file" value="95" />
         </counts>
       </usages-collector>
@@ -103,8 +101,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="170" selection-start-line="170" selection-end-line="170" />
+            <state relative-caret-position="120">
+              <caret line="58" column="7" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -264,7 +262,7 @@
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="mugshots" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533752255342" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533753319605" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
@@ -445,7 +443,7 @@
       <workItem from="1531347991260" duration="1615000" />
       <workItem from="1533073615496" duration="2548000" />
       <workItem from="1533411413563" duration="16680000" />
-      <workItem from="1533527880443" duration="34582000" />
+      <workItem from="1533527880443" duration="35304000" />
     </task>
     <task id="LOCAL-00001" summary="Added web_crawler module - using html5ever crate to parse web page data">
       <created>1533411665315</created>
@@ -489,11 +487,18 @@
       <option name="project" value="LOCAL" />
       <updated>1533611501567</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Working test with new WebMap, Node - but changed to use references to HashTable">
+      <created>1533752620626</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1533752620626</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86934000" />
+    <option name="totallyTimeSpent" value="87656000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="42" y="23" width="1238" height="777" extended-state="6" />
@@ -574,7 +579,8 @@
     <MESSAGE value="Added recursion to the web crawling...finds hrefs in the current page.&#10;Need to break the paths down to do further crawling.&#10;Also, need to pull out the src files(img, ccs, jss, etc.)" />
     <MESSAGE value="Cleaned up warnings, removed unused code, added commenting" />
     <MESSAGE value="Major updates to include a web_map module. This is now included in the web_crawler - which builds a web_map object." />
-    <option name="LAST_COMMIT_MESSAGE" value="Major updates to include a web_map module. This is now included in the web_crawler - which builds a web_map object." />
+    <MESSAGE value="Working test with new WebMap, Node - but changed to use references to HashTable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working test with new WebMap, Node - but changed to use references to HashTable" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -701,8 +707,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="170" selection-start-line="170" selection-end-line="170" />
+        <state relative-caret-position="120">
+          <caret line="58" column="7" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="7" />
         </state>
       </provider>
     </entry>

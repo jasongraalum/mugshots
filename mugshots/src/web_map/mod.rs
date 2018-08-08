@@ -28,7 +28,7 @@ impl WebMap {
     // Create new web_map
     pub fn new() -> WebMap
     {
-        WebMap { hosts: Vec::new(), resources : HashMap::new(), ref_tag_attr_pairs: Vec::new(), src_tag_attr_pairs: Vec::new() }
+        WebMap { hosts: Vec::new(), references : HashMap::new(), resources : HashMap::new(), ref_tag_attr_pairs: Vec::new(), src_tag_attr_pairs: Vec::new() }
     }
 
     pub fn add_host(&mut self, hostname : &str) -> bool
@@ -38,7 +38,8 @@ impl WebMap {
             Ok(url) => {
                 let mut hostname_string = String::new();
                 hostname_string.push_str(hostname);
-                self.hosts.push((hostname_string, WebMapNode::new(url)));
+                let node_hash = self.add_node(&hostname,&url);
+                self.hosts.push((hostname_string, node_hash));
                 true
             },
         }
@@ -54,6 +55,9 @@ impl WebMap {
         return host_list;
     }
 
+    pub fn add_node(&mut self, hostname : &str, url: &Url) -> i32 {
+        0
+    }
     /*
     // Insert a source name into the web_map
     pub fn insert_page(&mut self, page_url: Url) -> bool
@@ -121,19 +125,33 @@ impl WebMap {
 
 #[derive(Clone,Eq,PartialEq)]
 pub struct WebMapNode {
-    path: String,
-    resources_hashes : Vec<i32>,
+    url: Url,
     status: Option<StatusCode>,
-    hash: i32,
-    references: Vec<WebMapNode>,
+    references: Vec<i32>,
+    resources : Vec<i32>,
+    children: Vec<i32>,
+}
+
+impl Hash for WebMapNode {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        let host = self.url.host_str();
+        let path = self.url.path();
+        host.hash(state);
+        path.hash(state);
+        self.status.hash(state);
+    }
 }
 
 impl WebMapNode {
-    pub fn new(url : Url) -> WebMapNode{
+    pub fn new(url : Url) -> WebMapNode {
         // GET Response
-        let (references, resources) = process_url(url);
+        let root_node = WebMapNode {url : url,
+            references : Vec::new(),
+            resources: Vec::new(),
+            status : None,
+            children: Vec::new()};
 
-        let root_node = WebMapNode {path : url.path().to_string(), resources_hashes : Vec::new(), status : None, hash : 0, references: Vec::new()}
+        root_node
     }
 }
 
@@ -153,6 +171,7 @@ impl Hash for WebResource {
         self.resource_type.hash(state);
     }
 }
+
 
 #[test]
 fn webmap_add_new_host()
