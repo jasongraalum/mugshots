@@ -14,6 +14,15 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use reqwest::{self,StatusCode};
 
+//use std::io;
+use std::default::Default;
+
+use html5ever::tokenizer::{TokenSink, Tokenizer, Token, TokenizerOpts, ParseError, TokenSinkResult};
+use html5ever::tokenizer::{CharacterTokens, NullCharacterToken, TagToken};
+use html5ever::tokenizer::BufferQueue;
+use html5ever::tendril::*;
+
+
 
 #[derive(Clone,Eq,PartialEq)]
 pub struct WebMap {
@@ -28,17 +37,17 @@ impl WebMap {
     // Create new web_map
     pub fn new() -> WebMap
     {
-        WebMap { hosts: Vec::new(), references : HashMap::new(), resources : HashMap::new(), ref_tag_attr_pairs: Vec::new(), src_tag_attr_pairs: Vec::new() }
+        WebMap { hosts: Vec::new(), references: HashMap::new(), resources: HashMap::new(), ref_tag_attr_pairs: Vec::new(), src_tag_attr_pairs: Vec::new() }
     }
 
-    pub fn add_host(&mut self, hostname : &str) -> bool
+    pub fn add_host(&mut self, hostname: &str) -> bool
     {
         match Url::parse(hostname) {
             Err(_) => false,
             Ok(url) => {
                 let mut hostname_string = String::new();
                 hostname_string.push_str(hostname);
-                let node_hash = self.add_node(&hostname,&url);
+                let node_hash = self.add_node(&hostname, &url);
                 self.hosts.push((hostname_string, node_hash));
                 true
             },
@@ -47,54 +56,62 @@ impl WebMap {
 
     pub fn list_hosts(&self) -> Vec<String>
     {
-        let mut host_list : Vec<String> = Vec::new();
-        for &(ref h, ref n) in &self.hosts  {
+        let mut host_list: Vec<String> = Vec::new();
+        for &(ref h, ref n) in &self.hosts {
             host_list.push(h.clone());
         }
 
         return host_list;
     }
 
-    pub fn add_node(&mut self, hostname : &str, url: &Url) -> i32 {
+    pub fn add_node(&mut self, hostname: &str, node_url: &Url) -> i32 {
+        let (status, resources, references) = self.process_url(&mut self, &hostname, &node_url);
+
+        let new_node: WebMapNode = WebMapNode {
+            url : node_url.clone(),
+            status,
+            references,
+            resources,
+            children: Vec::new()
+        };
         0
     }
-    /*
-    // Insert a source name into the web_map
-    pub fn insert_page(&mut self, page_url: Url) -> bool
+
+    pub fn process_url(&mut self, hostname : &str, url: &Url) -> (StatusCode, Option<Vec<i32>>, Option<Vec<i32>>)
     {
-        let mut hostname  = match page_url.host() {
-            None => return false,
-            Some(h) => match h {
-                Host::Domain(host) => host,
-                _ => return false,
-            },
+        let token_output : (Vec<i32>, Vec<i32>);
+        let sink = TokenParse {
+            token_struct: token_output
         };
 
-        for &mut (host, node) in &mut self.hosts {
-            if host == hostname {
-                found_node = Some(&mut node);
+        let mut resp = reqwest::get(url).unwrap();
+
+        match resp.status() {
+            StatusCode::Ok => {
+                match resp.text() {
+                    Ok(text) => {
+                        let mut chunk = ByteTendril::new();
+                        chunk.try_push_bytes(texgt.as_bytes()).unwrap();
+
+                        let mut input = BufferQueue::new();
+                        input.push_back(chunk.try_reinterpret().unwrap());
+
+                        let mut tok = Tokenizer::new(sink, TokenizerOpts {
+                            profile: true,
+                            ..Default::default()
+                        });
+
+                        let _ = tok.feed(&mut input);
+                    },
+                    Err(e) => return Err("Error on text parse"),
+                };
             }
         }
-
-        match found_node {
-            None => {
-                let mut hostname_string : String = "".to_string();
-                hostname_string.push_str(hostname);
-                hostname_string.push('/');
-                match Url::parse(hostname_string.as_str()) {
-                    Ok(root_url) => {
-                        self.hosts.push((hostname_string, WebMapNode::new(root_url)));
-                        return true;
-                    },
-                    Err(_err) => return false,
-                }
-            },
-            Some(_) => self.add_node_path(&page_url),
-        }
-
+        (resp.status(), None, None)
     }
+}
 
-    // Add a new set of webmapnodes to the webmap.  Add nodes from empty on down
+/*
     fn add_node_path(&mut self, page_url: &Url ) -> bool
     {
         // Break the page_url into different levels
@@ -113,14 +130,42 @@ impl WebMap {
             None => return false,
         }
         // Remove levels which already exist in the WebMap
-
         false
-
     }
     */
 
+
+#[derive(Clone)]
+struct TokenParse {
+    token_struct : (Vec<i32>,Vec<i32>)
 }
 
+
+// Use the TokenSink Trait from the html5ever crate
+// Code template taken from html5ever example/tokenizer.rs
+impl TokenSink for TokenParse {
+    type Handle = ();
+    fn process_token(&mut self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
+        match token {
+            TagToken(tag) => {
+                for attr in tag.attrs.iter() {
+                    let tag_name : String = tag.name.get(0..).unwrap().to_string();
+                    let attr_name : String = attr.name.local.get(0..).unwrap().to_string();
+                    let attr_val : String = attr.value.get(0..).unwrap().to_string();
+
+                    if self.webmap.ref_tag_attr_pairs.contains(&(tag_name, attr_name)) {
+                        let new_url = Url::parse(&attr_val).unwrap();
+
+                        self.webmap.insert_page(new_url);
+                    }
+                }
+            }
+            _ => {},
+        }
+
+        TokenSinkResult::Continue
+    }
+}
 
 
 #[derive(Clone,Eq,PartialEq)]
