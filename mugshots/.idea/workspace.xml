@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b23abdc0-f4ae-4d70-8855-c5a43298c716" name="Default" comment="Single test passing after move to references to HashMaps&#10;&#10;Need to add hashing step and add web node references and resources to their respective HashMaps">
+    <list default="true" id="b23abdc0-f4ae-4d70-8855-c5a43298c716" name="Default" comment="Not working - in the middle of adding parse function">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web_map/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/web_map/mod.rs" afterDir="false" />
     </list>
@@ -57,15 +57,15 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="rs" value="75419" />
+          <entry key="rs" value="77523" />
           <entry key="toml" value="95" />
-          <entry key="txt" value="1020" />
+          <entry key="txt" value="1077" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="1020" />
-          <entry key="Rust" value="75419" />
+          <entry key="PLAIN_TEXT" value="1077" />
+          <entry key="Rust" value="77523" />
           <entry key="TOML file" value="95" />
         </counts>
       </usages-collector>
@@ -101,8 +101,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="155" column="28" selection-start-line="155" selection-start-column="28" selection-end-line="155" selection-end-column="28" />
+            <state relative-caret-position="-693">
+              <caret line="180" selection-start-line="180" selection-end-line="180" />
             </state>
           </provider>
         </entry>
@@ -262,7 +262,7 @@
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="mugshots" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533754614201" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533757280768" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
@@ -443,7 +443,7 @@
       <workItem from="1531347991260" duration="1615000" />
       <workItem from="1533073615496" duration="2548000" />
       <workItem from="1533411413563" duration="16680000" />
-      <workItem from="1533527880443" duration="36839000" />
+      <workItem from="1533527880443" duration="38436000" />
     </task>
     <task id="LOCAL-00001" summary="Added web_crawler module - using html5ever crate to parse web page data">
       <created>1533411665315</created>
@@ -501,11 +501,18 @@
       <option name="project" value="LOCAL" />
       <updated>1533753508401</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Not working - in the middle of adding parse function">
+      <created>1533754876839</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1533754876839</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89191000" />
+    <option name="totallyTimeSpent" value="90788000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="42" y="23" width="1238" height="777" extended-state="6" />
@@ -521,7 +528,7 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.58912385" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.49848944" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -588,7 +595,8 @@
     <MESSAGE value="Major updates to include a web_map module. This is now included in the web_crawler - which builds a web_map object." />
     <MESSAGE value="Working test with new WebMap, Node - but changed to use references to HashTable" />
     <MESSAGE value="Single test passing after move to references to HashMaps&#10;&#10;Need to add hashing step and add web node references and resources to their respective HashMaps" />
-    <option name="LAST_COMMIT_MESSAGE" value="Single test passing after move to references to HashMaps&#10;&#10;Need to add hashing step and add web node references and resources to their respective HashMaps" />
+    <MESSAGE value="Not working - in the middle of adding parse function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Not working - in the middle of adding parse function" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -715,8 +723,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="155" column="28" selection-start-line="155" selection-start-column="28" selection-end-line="155" selection-end-column="28" />
+        <state relative-caret-position="-693">
+          <caret line="180" selection-start-line="180" selection-end-line="180" />
         </state>
       </provider>
     </entry>

@@ -65,27 +65,35 @@ impl WebMap {
     }
 
     pub fn add_node(&mut self, hostname: &str, node_url: &Url) -> i32 {
-        let (status, resources, references) = self.process_url(&mut self, &hostname, &node_url);
+        let (status, resources, references) = self.process_url(&hostname, &node_url);
 
-        let new_node: WebMapNode = WebMapNode {
-            url : node_url.clone(),
-            status,
-            references,
-            resources,
-            children: Vec::new()
-        };
-        0
+        match self.process_url(&hostname, &node_url) {
+            (StatusCode::Ok, Some(res), Some(refs)) => {
+                let new_node: WebMapNode = WebMapNode {
+                    url : node_url.clone(),
+                    status: Some(status),
+                    resources :res,
+                    references : refs,
+                    children: Vec::new() };
+                3
+            },
+            (StatusCode::Ok, None, None) => 1,
+            _ => 2,
+        }
     }
 
     pub fn process_url(&mut self, hostname : &str, url: &Url) -> (StatusCode, Option<Vec<i32>>, Option<Vec<i32>>)
     {
+        /*
         let token_output : (Vec<i32>, Vec<i32>);
         let sink = TokenParse {
             token_struct: token_output
         };
+        */
 
-        let mut resp = reqwest::get(url).unwrap();
+        let mut resp = reqwest::get(url.clone()).unwrap();
 
+        /*
         match resp.status() {
             StatusCode::Ok => {
                 match resp.text() {
@@ -107,6 +115,7 @@ impl WebMap {
                 };
             }
         }
+        */
         (resp.status(), None, None)
     }
 }
@@ -132,40 +141,9 @@ impl WebMap {
         // Remove levels which already exist in the WebMap
         false
     }
-    */
+*/
 
 
-#[derive(Clone)]
-struct TokenParse {
-    token_struct : (Vec<i32>,Vec<i32>)
-}
-
-
-// Use the TokenSink Trait from the html5ever crate
-// Code template taken from html5ever example/tokenizer.rs
-impl TokenSink for TokenParse {
-    type Handle = ();
-    fn process_token(&mut self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
-        match token {
-            TagToken(tag) => {
-                for attr in tag.attrs.iter() {
-                    let tag_name : String = tag.name.get(0..).unwrap().to_string();
-                    let attr_name : String = attr.name.local.get(0..).unwrap().to_string();
-                    let attr_val : String = attr.value.get(0..).unwrap().to_string();
-
-                    if self.webmap.ref_tag_attr_pairs.contains(&(tag_name, attr_name)) {
-                        let new_url = Url::parse(&attr_val).unwrap();
-
-                        self.webmap.insert_page(new_url);
-                    }
-                }
-            }
-            _ => {},
-        }
-
-        TokenSinkResult::Continue
-    }
-}
 
 
 #[derive(Clone,Eq,PartialEq)]
@@ -217,6 +195,39 @@ impl Hash for WebResource {
     }
 }
 
+/*
+#[derive(Clone)]
+struct TokenParse {
+    token_struct : (Vec<i32>,Vec<i32>)
+}
+
+
+// Use the TokenSink Trait from the html5ever crate
+// Code template taken from html5ever example/tokenizer.rs
+impl TokenSink for TokenParse {
+    type Handle = ();
+    fn process_token(&mut self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
+        match token {
+            TagToken(tag) => {
+                for attr in tag.attrs.iter() {
+                    let tag_name : String = tag.name.get(0..).unwrap().to_string();
+                    let attr_name : String = attr.name.local.get(0..).unwrap().to_string();
+                    let attr_val : String = attr.value.get(0..).unwrap().to_string();
+
+                    if self.webmap.ref_tag_attr_pairs.contains(&(tag_name, attr_name)) {
+                        let new_url = Url::parse(&attr_val).unwrap();
+
+                        self.webmap.insert_page(new_url);
+                    }
+                }
+            }
+            _ => {},
+        }
+
+        TokenSinkResult::Continue
+    }
+}
+*/
 
 #[test]
 fn webmap_add_new_host()
