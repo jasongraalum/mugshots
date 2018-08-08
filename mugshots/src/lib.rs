@@ -33,7 +33,6 @@ extern crate url;
 
 pub mod photo;
 pub mod library;
-pub mod web_crawler;
 pub mod web_map;
 
 //

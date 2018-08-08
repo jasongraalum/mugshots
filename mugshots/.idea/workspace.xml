@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b23abdc0-f4ae-4d70-8855-c5a43298c716" name="Default" comment="Major updates to include a web_map module. This is now included in the web_crawler - which builds a web_map object.">
-      <change afterPath="$PROJECT_DIR$/src/web_map/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web_crawler/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/web_crawler/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web_crawler/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web_map/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/web_map/mod.rs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -43,7 +43,7 @@
         <counts>
           <entry key="iml" value="1" />
           <entry key="md" value="1" />
-          <entry key="rs" value="21" />
+          <entry key="rs" value="22" />
           <entry key="toml" value="2" />
           <entry key="xml" value="5" />
         </counts>
@@ -52,14 +52,14 @@
         <counts>
           <entry key="IDEA_MODULE" value="1" />
           <entry key="Markdown" value="1" />
-          <entry key="Rust" value="21" />
+          <entry key="Rust" value="22" />
           <entry key="TOML file" value="2" />
           <entry key="XML" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="rs" value="43207" />
+          <entry key="rs" value="70137" />
           <entry key="toml" value="95" />
           <entry key="txt" value="763" />
         </counts>
@@ -67,7 +67,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="763" />
-          <entry key="Rust" value="43207" />
+          <entry key="Rust" value="70137" />
           <entry key="TOML file" value="95" />
         </counts>
       </usages-collector>
@@ -81,8 +81,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/photo/mod.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+            <state relative-caret-position="-209">
+              <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -101,22 +101,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/web_crawler/mod.rs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="94" column="20" selection-start-line="94" selection-start-column="20" selection-end-line="94" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
-              <folding>
-                <element signature="e#1317#1318#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="225">
+              <caret line="170" selection-start-line="170" selection-end-line="170" />
             </state>
           </provider>
         </entry>
@@ -124,8 +112,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lib.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" column="14" selection-start-line="41" selection-start-column="14" selection-end-line="41" selection-end-column="14" />
+            <state relative-caret-position="255">
+              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -142,8 +130,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/web_crawler_tests.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+            <state relative-caret-position="540">
+              <caret line="38" selection-start-line="38" selection-end-line="38" />
             </state>
           </provider>
         </entry>
@@ -176,13 +164,13 @@
         <option value="$PROJECT_DIR$/src/test/web_crawler.rs" />
         <option value="$PROJECT_DIR$/tests/photo_tests.rs" />
         <option value="$PROJECT_DIR$/tests/library_tests.rs" />
-        <option value="$PROJECT_DIR$/tests/web_crawler_tests.rs" />
         <option value="$PROJECT_DIR$/src/photo/tests/test.rs" />
         <option value="$PROJECT_DIR$/src/photo/mod.rs" />
         <option value="$PROJECT_DIR$/src/library/mod.rs" />
+        <option value="$PROJECT_DIR$/tests/web_crawler_tests.rs" />
+        <option value="$PROJECT_DIR$/src/web_crawler/mod.rs" />
         <option value="$PROJECT_DIR$/src/lib.rs" />
         <option value="$PROJECT_DIR$/src/web_map/mod.rs" />
-        <option value="$PROJECT_DIR$/src/web_crawler/mod.rs" />
       </list>
     </option>
   </component>
@@ -199,10 +187,11 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="1936" />
-    <option name="width" value="1889" />
-    <option name="height" value="1057" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="41" />
+    <option name="y" value="23" />
+    <option name="width" value="1797" />
+    <option name="height" value="1046" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -234,12 +223,6 @@
               <item name="mugshots" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="photo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mugshots" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mugshots" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="web_crawler" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mugshots" type="b2602c69:ProjectViewProjectNode" />
@@ -281,7 +264,7 @@
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="mugshots" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533611456957" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533752255342" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
@@ -308,7 +291,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Cargo Command.Test web_map::create_new_map">
+  <component name="RunManager" selected="Cargo Command.Test web_map::webmap_add_new_host">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -368,18 +351,18 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="Test test_imagedata_construction" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+    <configuration name="Test web_map::create_new_map" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="channel" value="DEFAULT" />
-      <option name="command" value="test --package mugshots --test photo_tests test_imagedata_construction -- --exact" />
+      <option name="command" value="test --package mugshots --lib web_map::create_new_map -- --exact" />
       <option name="nocapture" value="true" />
       <option name="backtrace" value="SHORT" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="Test web_map::create_new_map" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+    <configuration name="Test web_map::webmap_add_new_host" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="channel" value="DEFAULT" />
-      <option name="command" value="test --package mugshots --lib web_map::create_new_map -- --exact" />
+      <option name="command" value="test --package mugshots --lib web_map::webmap_add_new_host -- --exact" />
       <option name="nocapture" value="true" />
       <option name="backtrace" value="SHORT" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -425,18 +408,18 @@
       <item itemvalue="Cargo Command.web_crawler test" />
       <item itemvalue="Cargo Command.Test photo::test_imagedata_construction" />
       <item itemvalue="Cargo Command.Test test1" />
-      <item itemvalue="Cargo Command.Test test_imagedata_construction" />
       <item itemvalue="Cargo Command.Test parse_test" />
       <item itemvalue="Cargo Command.Test crawl_test1" />
       <item itemvalue="Cargo Command.Test web_map::create_new_map" />
+      <item itemvalue="Cargo Command.Test web_map::webmap_add_new_host" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo Command.Test web_map::webmap_add_new_host" />
         <item itemvalue="Cargo Command.Test web_map::create_new_map" />
         <item itemvalue="Cargo Command.Test crawl_test1" />
         <item itemvalue="Cargo Command.Test test1" />
         <item itemvalue="Cargo Command.Test parse_test" />
-        <item itemvalue="Cargo Command.Test test_imagedata_construction" />
       </list>
     </recent_temporary>
   </component>
@@ -462,7 +445,7 @@
       <workItem from="1531347991260" duration="1615000" />
       <workItem from="1533073615496" duration="2548000" />
       <workItem from="1533411413563" duration="16680000" />
-      <workItem from="1533527880443" duration="18258000" />
+      <workItem from="1533527880443" duration="34582000" />
     </task>
     <task id="LOCAL-00001" summary="Added web_crawler module - using html5ever crate to parse web page data">
       <created>1533411665315</created>
@@ -499,17 +482,24 @@
       <option name="project" value="LOCAL" />
       <updated>1533574520989</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Major updates to include a web_map module. This is now included in the web_crawler - which builds a web_map object.">
+      <created>1533611501567</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1533611501567</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70610000" />
+    <option name="totallyTimeSpent" value="86934000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1936" y="0" width="1889" height="1057" extended-state="0" />
+    <frame x="42" y="23" width="1238" height="777" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.1171024" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17976588" />
       <window_info id="Structure" order="1" weight="0.24979185" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="3" />
@@ -519,14 +509,14 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.39278132" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.5589124" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50031346" side_tool="true" weight="0.30879122" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32908705" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24979322" />
@@ -583,7 +573,8 @@
     <MESSAGE value="Tests running - 2 of 3 passing." />
     <MESSAGE value="Added recursion to the web crawling...finds hrefs in the current page.&#10;Need to break the paths down to do further crawling.&#10;Also, need to pull out the src files(img, ccs, jss, etc.)" />
     <MESSAGE value="Cleaned up warnings, removed unused code, added commenting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up warnings, removed unused code, added commenting" />
+    <MESSAGE value="Major updates to include a web_map module. This is now included in the web_crawler - which builds a web_map object." />
+    <option name="LAST_COMMIT_MESSAGE" value="Major updates to include a web_map module. This is now included in the web_crawler - which builds a web_map object." />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -662,20 +653,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" column="14" selection-start-line="41" selection-start-column="14" selection-end-line="41" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/photo/mod.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Cargo.toml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -694,27 +671,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/web_crawler_tests.rs">
+    <entry file="file://$PROJECT_DIR$/src/photo/mod.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
-          <folding>
-            <element signature="e#1317#1318#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-209">
+          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/web_crawler/mod.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="94" column="20" selection-start-line="94" selection-start-column="20" selection-end-line="94" selection-end-column="20" />
+        <state relative-caret-position="728">
+          <caret line="84" column="20" selection-start-line="84" selection-start-column="20" selection-end-line="84" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lib.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/web_crawler_tests.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="170" selection-start-line="170" selection-end-line="170" />
         </state>
       </provider>
     </entry>
