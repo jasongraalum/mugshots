@@ -1,6 +1,5 @@
 // Copyright (c) 2018 Jason Graalum
-// //
-// web_map library
+// // // web_map library
 //
 // Defines a structure to reflect the hierarchical traits of a web site
 //
@@ -10,27 +9,27 @@
 
 pub mod tokenizer;
 
+use std::io;
+use std::default::Default;
+
+use html5ever::tokenizer::{TokenSink, Tokenizer, Token, TokenizerOpts, ParseError, TokenSinkResult};
+use html5ever::tokenizer::{CharacterTokens, NullCharacterToken, TagToken, StartTag, EndTag};
+use html5ever::tokenizer::BufferQueue;
+use html5ever::tendril::*;
+
 use url::{self, Url,Host};
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use reqwest::{self,StatusCode};
 
-//use std::io;
-use std::default::Default;
-
-use html5ever::tokenizer::{TokenSink, Tokenizer, Token, TokenizerOpts, ParseError, TokenSinkResult};
-use html5ever::tokenizer::{CharacterTokens, NullCharacterToken, TagToken};
-use html5ever::tokenizer::BufferQueue;
-use html5ever::tendril::*;
-
-
+use web_map::tokenizer::UrlTokenParser;
 
 #[derive(Clone,Eq,PartialEq)]
 pub struct WebMap {
-    hosts: Vec<(String,i32)>,
-    resources : HashMap<i32, WebResource>,
-    references : HashMap<i32, WebMapNode>,
+    hosts: Vec<(String,u64)>,
+    resources : HashMap<u64, WebResource>,
+    references : HashMap<u64, WebMapNode>,
     ref_tag_attr_pairs: Vec<(String, String)>,
     src_tag_attr_pairs: Vec<(String, String)>,
 }
@@ -66,7 +65,7 @@ impl WebMap {
         return host_list;
     }
 
-    pub fn add_node(&mut self, hostname: &str, node_url: &Url) -> i32 {
+    pub fn add_node(&mut self, hostname: &str, node_url: &Url) -> u64 {
         let (status, resources, references) = self.process_url(&hostname, &node_url);
 
         match self.process_url(&hostname, &node_url) {
@@ -77,6 +76,10 @@ impl WebMap {
                     resources :res,
                     references : refs,
                     children: Vec::new() };
+                let mut hasher = DefaultHasher::new();
+                let new_hash = new_node.hash(&mut hasher);
+                let hash_val = hasher.finish();
+                self.references.insert(hash_val, new_node);
                 3
             },
             (StatusCode::Ok, None, None) => 1,
@@ -84,77 +87,50 @@ impl WebMap {
         }
     }
 
-    pub fn process_url(&mut self, hostname : &str, url: &Url) -> (StatusCode, Option<Vec<i32>>, Option<Vec<i32>>)
+    pub fn process_url(&mut self, hostname : &str, url: &Url) -> (StatusCode, Option<Vec<u64>>, Option<Vec<u64>>)
     {
-        /*
-        let token_output : (Vec<i32>, Vec<i32>);
-        let sink = TokenParse {
-            token_struct: token_output
-        };
-        */
-
         let mut resp = reqwest::get(url.clone()).unwrap();
 
-        /*
-        match resp.status() {
-            StatusCode::Ok => {
-                match resp.text() {
-                    Ok(text) => {
-                        let mut chunk = ByteTendril::new();
-                        chunk.try_push_bytes(texgt.as_bytes()).unwrap();
+        let mut sink = UrlTokenParser {
+            in_char_run: false,
+            resources : Vec::new(),
+            references : Vec::new(),
+        };
+        let mut resp_text = reqwest::get("https://www.pdx.edu").unwrap().text().unwrap();
 
-                        let mut input = BufferQueue::new();
-                        input.push_back(chunk.try_reinterpret().unwrap());
+        let mut chunk = ByteTendril::new();
+        chunk.try_push_bytes(resp_text.as_bytes()).unwrap();
 
-                        let mut tok = Tokenizer::new(sink, TokenizerOpts {
-                            profile: true,
-                            ..Default::default()
-                        });
+        let mut input = BufferQueue::new();
+        input.push_back(chunk.try_reinterpret().unwrap());
 
-                        let _ = tok.feed(&mut input);
-                    },
-                    Err(e) => return Err("Error on text parse"),
-                };
-            }
-        }
-        */
+        let mut tok = Tokenizer::new(sink, TokenizerOpts {
+            profile: true,
+            .. Default::default()
+        });
+
+        let _ = tok.feed(&mut input);
+        //assert!(input.is_empty());
+
+        //tok.end();
+        //println!("References");
+        //println!("{:?}",tok.sink.references);
+        //println!("Resources");
+        //println!("{:?}",tok.sink.resources);
+
+
+        //(reshp.status(), Some(tok.sink.references), Some(tok.sink.resources))
         (resp.status(), None, None)
     }
 }
-
-/*
-    fn add_node_path(&mut self, page_url: &Url ) -> bool
-    {
-        // Break the page_url into different levels
-        // Url: /a/b/c => /a, /a/b, /a/b/c
-        let mut node_level : String = "/".to_string();
-        let mut levels = Vec::new();
-        let segments = page_url.path_segments();
-        match segments {
-            Some(seg_set) => {
-                for s in seg_set {
-                    node_level.push('/');
-                    node_level.push_str(s);
-                    levels.push(node_level);
-                }
-            }
-            None => return false,
-        }
-        // Remove levels which already exist in the WebMap
-        false
-    }
-*/
-
-
-
 
 #[derive(Clone,Eq,PartialEq)]
 pub struct WebMapNode {
     url: Url,
     status: Option<StatusCode>,
-    references: Vec<i32>,
-    resources : Vec<i32>,
-    children: Vec<i32>,
+    references: Vec<u64>,
+    resources : Vec<u64>,
+    children: Vec<u64>,
 }
 
 impl Hash for WebMapNode {
@@ -180,7 +156,6 @@ impl WebMapNode {
     }
 }
 
-
 #[derive(Clone,PartialEq, Eq)]
 struct WebResource {
     url: Url,
@@ -196,40 +171,6 @@ impl Hash for WebResource {
         self.resource_type.hash(state);
     }
 }
-
-/*
-#[derive(Clone)]
-struct TokenParse {
-    token_struct : (Vec<i32>,Vec<i32>)
-}
-
-
-// Use the TokenSink Trait from the html5ever crate
-// Code template taken from html5ever example/tokenizer.rs
-impl TokenSink for TokenParse {
-    type Handle = ();
-    fn process_token(&mut self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
-        match token {
-            TagToken(tag) => {
-                for attr in tag.attrs.iter() {
-                    let tag_name : String = tag.name.get(0..).unwrap().to_string();
-                    let attr_name : String = attr.name.local.get(0..).unwrap().to_string();
-                    let attr_val : String = attr.value.get(0..).unwrap().to_string();
-
-                    if self.webmap.ref_tag_attr_pairs.contains(&(tag_name, attr_name)) {
-                        let new_url = Url::parse(&attr_val).unwrap();
-
-                        self.webmap.insert_page(new_url);
-                    }
-                }
-            }
-            _ => {},
-        }
-
-        TokenSinkResult::Continue
-    }
-}
-*/
 
 #[test]
 fn webmap_add_new_host()

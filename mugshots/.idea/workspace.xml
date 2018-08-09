@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b23abdc0-f4ae-4d70-8855-c5a43298c716" name="Default" comment="Compiling and passing single test.">
+    <list default="true" id="b23abdc0-f4ae-4d70-8855-c5a43298c716" name="Default" comment="Tokenizer added and working - passing one test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/web_map/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/web_map/mod.rs" afterDir="false" />
     </list>
@@ -58,15 +58,15 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="rs" value="80070" />
+          <entry key="rs" value="84243" />
           <entry key="toml" value="95" />
-          <entry key="txt" value="1115" />
+          <entry key="txt" value="1161" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="1115" />
-          <entry key="Rust" value="80070" />
+          <entry key="PLAIN_TEXT" value="1161" />
+          <entry key="Rust" value="84243" />
           <entry key="TOML file" value="95" />
         </counts>
       </usages-collector>
@@ -99,20 +99,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+            <state relative-caret-position="-534">
+              <caret line="133" selection-start-line="133" selection-end-line="133" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/web_map/tokenizer.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="110" column="32" selection-start-line="110" selection-start-column="32" selection-end-line="110" selection-end-column="32" />
+            <state relative-caret-position="-1414">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -187,8 +187,8 @@
         <option value="$PROJECT_DIR$/tests/web_crawler_tests.rs" />
         <option value="$PROJECT_DIR$/src/web_crawler/mod.rs" />
         <option value="$PROJECT_DIR$/src/lib.rs" />
-        <option value="$PROJECT_DIR$/src/web_map/mod.rs" />
         <option value="$PROJECT_DIR$/src/web_map/tokenizer.rs" />
+        <option value="$PROJECT_DIR$/src/web_map/mod.rs" />
       </list>
     </option>
   </component>
@@ -206,10 +206,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1935" />
-    <option name="y" value="4" />
-    <option name="width" value="1905" />
-    <option name="height" value="1072" />
+    <option name="x" value="35" />
+    <option name="y" value="23" />
+    <option name="width" value="1238" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -276,7 +276,7 @@
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="mugshots" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533778848604" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533852828927" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
@@ -303,7 +303,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Cargo Command.Test web_map::tokenizer::test_tokenizer">
+  <component name="RunManager" selected="Cargo Command.Test web_map::webmap_add_new_host">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -427,8 +427,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo Command.Test web_map::tokenizer::test_tokenizer" />
         <item itemvalue="Cargo Command.Test web_map::webmap_add_new_host" />
+        <item itemvalue="Cargo Command.Test web_map::tokenizer::test_tokenizer" />
         <item itemvalue="Cargo Command.Test web_map::create_new_map" />
         <item itemvalue="Cargo Command.Test crawl_test1" />
         <item itemvalue="Cargo Command.Test test1" />
@@ -458,7 +458,7 @@
       <workItem from="1533073615496" duration="2548000" />
       <workItem from="1533411413563" duration="16680000" />
       <workItem from="1533527880443" duration="39325000" />
-      <workItem from="1533769701799" duration="3073000" />
+      <workItem from="1533769701799" duration="7327000" />
     </task>
     <task id="LOCAL-00001" summary="Added web_crawler module - using html5ever crate to parse web page data">
       <created>1533411665315</created>
@@ -530,14 +530,21 @@
       <option name="project" value="LOCAL" />
       <updated>1533758131113</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Tokenizer added and working - passing one test">
+      <created>1533779187873</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1533779187874</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94750000" />
+    <option name="totallyTimeSpent" value="99004000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1935" y="4" width="1905" height="1072" extended-state="0" />
+    <frame x="35" y="23" width="1238" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.11701556" />
@@ -550,7 +557,7 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.5423198" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.41389728" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -619,7 +626,8 @@
     <MESSAGE value="Single test passing after move to references to HashMaps&#10;&#10;Need to add hashing step and add web node references and resources to their respective HashMaps" />
     <MESSAGE value="Not working - in the middle of adding parse function" />
     <MESSAGE value="Compiling and passing single test." />
-    <option name="LAST_COMMIT_MESSAGE" value="Compiling and passing single test." />
+    <MESSAGE value="Tokenizer added and working - passing one test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tokenizer added and working - passing one test" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -741,17 +749,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
+    <entry file="file://$PROJECT_DIR$/src/web_map/tokenizer.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+        <state relative-caret-position="-1414">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/web_map/tokenizer.rs">
+    <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="110" column="32" selection-start-line="110" selection-start-column="32" selection-end-line="110" selection-end-column="32" />
+        <state relative-caret-position="-534">
+          <caret line="133" selection-start-line="133" selection-end-line="133" />
         </state>
       </provider>
     </entry>
