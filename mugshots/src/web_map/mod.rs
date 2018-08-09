@@ -8,6 +8,8 @@
 // Includes References - <a hrefs ...> for now
 // Includes Data Sources - <src img ...> for now
 
+pub mod tokenizer;
+
 use url::{self, Url,Host};
 use std::collections::HashMap;
 use std::collections::hash_map::DefaultHasher;
