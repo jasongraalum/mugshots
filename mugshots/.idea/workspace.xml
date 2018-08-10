@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b23abdc0-f4ae-4d70-8855-c5a43298c716" name="Default" comment="Added hashing to WebMapNode - changed hash to u64 from i32 - have no idea why I was using i32???">
+    <list default="true" id="b23abdc0-f4ae-4d70-8855-c5a43298c716" name="Default" comment="Major changes to validating URLs and hash gen funcs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web_map/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/web_map/mod.rs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -27,6 +26,25 @@
     <expand />
     <select />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/web_map/tokenizer.rs">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="345">
+                    <caret line="51" column="12" selection-start-line="51" selection-start-column="12" selection-end-line="51" selection-end-column="12" />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-180979794">
       <usages-collector id="statistics.lifecycle.project">
@@ -42,7 +60,7 @@
         <counts>
           <entry key="iml" value="1" />
           <entry key="md" value="1" />
-          <entry key="rs" value="26" />
+          <entry key="rs" value="27" />
           <entry key="toml" value="2" />
           <entry key="xml" value="5" />
         </counts>
@@ -51,22 +69,22 @@
         <counts>
           <entry key="IDEA_MODULE" value="1" />
           <entry key="Markdown" value="1" />
-          <entry key="Rust" value="26" />
+          <entry key="Rust" value="27" />
           <entry key="TOML file" value="2" />
           <entry key="XML" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="rs" value="95602" />
+          <entry key="rs" value="95926" />
           <entry key="toml" value="95" />
-          <entry key="txt" value="1271" />
+          <entry key="txt" value="1341" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="1271" />
-          <entry key="Rust" value="95602" />
+          <entry key="PLAIN_TEXT" value="1341" />
+          <entry key="Rust" value="95926" />
           <entry key="TOML file" value="95" />
         </counts>
       </usages-collector>
@@ -77,11 +95,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/photo/mod.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+            <state relative-caret-position="210">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -99,20 +117,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/web_map/tokenizer.rs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="79" column="16" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
+            <state relative-caret-position="915">
+              <caret line="240" column="38" selection-start-line="240" selection-start-column="38" selection-end-line="240" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -187,8 +196,8 @@
         <option value="$PROJECT_DIR$/tests/web_crawler_tests.rs" />
         <option value="$PROJECT_DIR$/src/web_crawler/mod.rs" />
         <option value="$PROJECT_DIR$/src/lib.rs" />
-        <option value="$PROJECT_DIR$/src/web_map/tokenizer.rs" />
         <option value="$PROJECT_DIR$/src/web_map/mod.rs" />
+        <option value="$PROJECT_DIR$/src/web_map/tokenizer.rs" />
       </list>
     </option>
   </component>
@@ -211,11 +220,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="456" />
-    <option name="y" value="128" />
-    <option name="width" value="1572" />
-    <option name="height" value="907" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="2038" />
+    <option name="y" value="43" />
+    <option name="width" value="1787" />
+    <option name="height" value="997" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -282,7 +291,7 @@
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="mugshots" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533924854727" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1533937187443" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
@@ -309,7 +318,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Cargo Command.Test web_map::webmap_add_new_host">
+  <component name="RunManager" selected="Cargo Command.Test web_map::tokenizer::test_tokenizer">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -433,8 +442,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo Command.Test web_map::webmap_add_new_host" />
         <item itemvalue="Cargo Command.Test web_map::tokenizer::test_tokenizer" />
+        <item itemvalue="Cargo Command.Test web_map::webmap_add_new_host" />
         <item itemvalue="Cargo Command.Test web_map::create_new_map" />
         <item itemvalue="Cargo Command.Test crawl_test1" />
         <item itemvalue="Cargo Command.Test test1" />
@@ -464,7 +473,7 @@
       <workItem from="1533073615496" duration="2548000" />
       <workItem from="1533411413563" duration="16680000" />
       <workItem from="1533527880443" duration="39325000" />
-      <workItem from="1533769701799" duration="16694000" />
+      <workItem from="1533769701799" duration="18506000" />
     </task>
     <task id="LOCAL-00001" summary="Added web_crawler module - using html5ever crate to parse web page data">
       <created>1533411665315</created>
@@ -550,14 +559,21 @@
       <option name="project" value="LOCAL" />
       <updated>1533852924167</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Major changes to validating URLs and hash gen funcs">
+      <created>1533925290759</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1533925290759</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108371000" />
+    <option name="totallyTimeSpent" value="110183000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="34" y="23" width="1238" height="777" extended-state="6" />
+    <frame x="2038" y="43" width="1787" height="997" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.11701556" />
@@ -570,7 +586,7 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.5589124" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.34807256" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -583,7 +599,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24979322" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="4" weight="0.32943144" />
+      <window_info anchor="right" id="Maven Projects" order="4" weight="0.22578797" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
       <window_info anchor="right" id="Database" order="6" weight="0.1460815" />
       <window_info anchor="right" id="Capture Analysis" order="7" />
@@ -601,7 +617,7 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.33383685" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4996865" visible="true" weight="0.13378684" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -614,7 +630,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24979322" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="4" weight="0.32943144" />
+      <window_info anchor="right" id="Maven Projects" order="4" visible="true" weight="0.22578797" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
       <window_info anchor="right" id="Database" order="6" weight="0.1460815" />
       <window_info anchor="right" id="Capture Analysis" order="7" />
@@ -641,7 +657,8 @@
     <MESSAGE value="Compiling and passing single test." />
     <MESSAGE value="Tokenizer added and working - passing one test" />
     <MESSAGE value="Added hashing to WebMapNode - changed hash to u64 from i32 - have no idea why I was using i32???" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added hashing to WebMapNode - changed hash to u64 from i32 - have no idea why I was using i32???" />
+    <MESSAGE value="Major changes to validating URLs and hash gen funcs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Major changes to validating URLs and hash gen funcs" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -717,13 +734,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/web_crawler/mod.rs" />
-    <entry file="file://$PROJECT_DIR$/src/photo/mod.rs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/photo/image_hash.rs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
@@ -763,17 +773,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/web_map/tokenizer.rs">
+    <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="79" column="16" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
+        <state relative-caret-position="915">
+          <caret line="240" column="38" selection-start-line="240" selection-start-column="38" selection-end-line="240" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/web_map/mod.rs">
+    <entry file="file://$PROJECT_DIR$/src/web_map/tokenizer.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
+        <state relative-caret-position="345">
+          <caret line="51" column="12" selection-start-line="51" selection-start-column="12" selection-end-line="51" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/photo/mod.rs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
