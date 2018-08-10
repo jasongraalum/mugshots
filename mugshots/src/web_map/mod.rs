@@ -71,20 +71,9 @@ impl WebMap {
 
     pub fn add_node(&mut self, hostname: &str, node_url: &Url) -> u64 {
 
-        //let (status, resources, references) = self.process_url(&hostname, &node_url);
-
-        // Generate new reference hash for hostname/url combination
-        let mut hasher = DefaultHasher::new();
-        node_url.as_str().hash(&mut hasher);
-        hostname.hash(&mut hasher);
-        let hash_val = hasher.finish();
-
-        // Check if WebMap references HashMap contains this hash
-        if self.references.contains_key(&hash_val) { return 0 };
-
         // Add new WebReference as a reference
         match self.process_url(&hostname, &node_url) {
-            (StatusCode::Ok, res, refs) => {
+            (StatusCode::Ok, Some(res), Some(refs), Some(hash)) => {
                 let mut ref_urls : Vec<Url> = Vec::new();
                 let mut res_urls : Vec<Url> = Vec::new();
                 let mut ref_hashes : Vec<u64> = Vec::new();
@@ -116,15 +105,24 @@ impl WebMap {
                     resources :res_hashes,
                     references : ref_hashes,
                     children: Vec::new() };
-                self.references.insert(hash_val, new_node);
-                hash_val
+
+                self.references.insert(hash, new_node);
+                hash
             },
             _ => 0,
         }
     }
 
-    pub fn process_url(&mut self, hostname : &str, url: &Url) -> (StatusCode, Vec<String>, Vec<String>)
+    pub fn process_url(&mut self, hostname : &str, url: &Url) -> (StatusCode, Option<Vec<String>>, Option<Vec<String>>, Option<u64>)
     {
+        // Generate new reference hash for hostname/url combination
+        let mut hasher = DefaultHasher::new();
+        url.as_str().hash(&mut hasher);
+        hostname.hash(&mut hasher);
+        let hash_val = hasher.finish();
+
+        // Check if WebMap references HashMap contains this hash
+        if self.references.contains_key(&hash_val) { return (StatusCode::ImATeapot, None, None, None) };
 
         let mut sink = UrlTokenParser {
             in_char_run: false,
@@ -148,7 +146,7 @@ impl WebMap {
 
         let _ = tok.feed(&mut input);
 
-        (resp.status(), tok.sink.references, tok.sink.resources)
+        (resp.status(), Some(tok.sink.references), Some(tok.sink.resources), Some(hash_val))
     }
     pub fn hash_host_and_url(hostname : &str, url_name: &str) -> u64
     {
