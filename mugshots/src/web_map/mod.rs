@@ -29,7 +29,7 @@ use web_map::tokenizer::UrlTokenParser;
 pub struct WebMap {
     hosts: Vec<(String,u64)>,
     resources : HashMap<u64, WebResource>,
-    references : HashMap<u64, WebMapNode>,
+    references : HashMap<u64, WebReference>,
     ref_tag_attr_pairs: Vec<(String, String)>,
     src_tag_attr_pairs: Vec<(String, String)>,
 }
@@ -49,8 +49,12 @@ impl WebMap {
                 let mut hostname_string = String::new();
                 hostname_string.push_str(hostname);
                 let node_hash = self.add_node(&hostname, &url);
-                self.hosts.push((hostname_string, node_hash));
-                true
+                if node_hash > 0 {
+                    self.hosts.push((hostname_string, node_hash));
+
+                    true
+                }
+                else { false }
             },
         }
     }
@@ -66,37 +70,70 @@ impl WebMap {
     }
 
     pub fn add_node(&mut self, hostname: &str, node_url: &Url) -> u64 {
-        let (status, resources, references) = self.process_url(&hostname, &node_url);
 
+        //let (status, resources, references) = self.process_url(&hostname, &node_url);
+
+        // Generate new reference hash for hostname/url combination
+        let mut hasher = DefaultHasher::new();
+        node_url.as_str().hash(&mut hasher);
+        hostname.hash(&mut hasher);
+        let hash_val = hasher.finish();
+
+        // Check if WebMap references HashMap contains this hash
+        if self.references.contains_key(&hash_val) { return 0 };
+
+        // Add new WebReference as a reference
         match self.process_url(&hostname, &node_url) {
-            (StatusCode::Ok, Some(res), Some(refs)) => {
-                let new_node: WebMapNode = WebMapNode {
+            (StatusCode::Ok, res, refs) => {
+                let mut ref_urls : Vec<Url> = Vec::new();
+                let mut res_urls : Vec<Url> = Vec::new();
+                let mut ref_hashes : Vec<u64> = Vec::new();
+                let mut res_hashes : Vec<u64> = Vec::new();
+
+                for ref_str in refs {
+                    match WebMap::validate_url_string(hostname, &ref_str) {
+                        Some((ref_url, ref_hash)) => {
+                            ref_urls.push(ref_url);
+                            ref_hashes.push(ref_hash);
+                        },
+                        None => {},
+                    }
+                }
+
+                for res_str in res {
+                    match WebMap::validate_url_string(hostname,&res_str) {
+                        Some((res_url, res_hash)) => {
+                            res_urls.push(res_url);
+                            res_hashes.push(res_hash);
+                        },
+                        None => {},
+                    }
+                }
+
+                let new_node: WebReference = WebReference {
                     url : node_url.clone(),
-                    status: Some(status),
-                    resources :res,
-                    references : refs,
+                    status: Some(StatusCode::Ok),
+                    resources :res_hashes,
+                    references : ref_hashes,
                     children: Vec::new() };
-                let mut hasher = DefaultHasher::new();
-                let new_hash = new_node.hash(&mut hasher);
-                let hash_val = hasher.finish();
                 self.references.insert(hash_val, new_node);
-                3
+                hash_val
             },
-            (StatusCode::Ok, None, None) => 1,
-            _ => 2,
+            _ => 0,
         }
     }
 
-    pub fn process_url(&mut self, hostname : &str, url: &Url) -> (StatusCode, Option<Vec<u64>>, Option<Vec<u64>>)
+    pub fn process_url(&mut self, hostname : &str, url: &Url) -> (StatusCode, Vec<String>, Vec<String>)
     {
-        let mut resp = reqwest::get(url.clone()).unwrap();
 
         let mut sink = UrlTokenParser {
             in_char_run: false,
             resources : Vec::new(),
             references : Vec::new(),
         };
-        let mut resp_text = reqwest::get("https://www.pdx.edu").unwrap().text().unwrap();
+
+        let mut resp = reqwest::get(url.clone()).unwrap();
+        let mut resp_text = resp.text().unwrap();
 
         let mut chunk = ByteTendril::new();
         chunk.try_push_bytes(resp_text.as_bytes()).unwrap();
@@ -110,22 +147,44 @@ impl WebMap {
         });
 
         let _ = tok.feed(&mut input);
-        //assert!(input.is_empty());
 
-        //tok.end();
-        //println!("References");
-        //println!("{:?}",tok.sink.references);
-        //println!("Resources");
-        //println!("{:?}",tok.sink.resources);
+        (resp.status(), tok.sink.references, tok.sink.resources)
+    }
+    pub fn hash_host_and_url(hostname : &str, url_name: &str) -> u64
+    {
+        let mut hasher = DefaultHasher::new();
+        url_name.hash(&mut hasher);
+        hostname.hash(&mut hasher);
+        hasher.finish()
+    }
 
-
-        //(reshp.status(), Some(tok.sink.references), Some(tok.sink.resources))
-        (resp.status(), None, None)
+    pub fn validate_url_string(base_name : &str, url: &str) -> Option<(Url, u64)>
+    {
+        match Url::parse(url) {
+            Err(_) => {
+                match Url::parse(base_name) {
+                    Err(_) => return None,
+                    Ok(base_url) => {
+                        match base_url.join(url) {
+                            Err(_) => return None,
+                            Ok(final_url) => {
+                                let hash = WebMap::hash_host_and_url(base_name,final_url.as_str());
+                                return Some((final_url, hash));
+                            },
+                        }
+                    },
+                }
+            }
+            Ok(final_url) => {
+                let hash = WebMap::hash_host_and_url(base_name,final_url.as_str());
+                return Some((final_url, hash));
+            },
+        }
     }
 }
 
 #[derive(Clone,Eq,PartialEq)]
-pub struct WebMapNode {
+pub struct WebReference {
     url: Url,
     status: Option<StatusCode>,
     references: Vec<u64>,
@@ -133,7 +192,7 @@ pub struct WebMapNode {
     children: Vec<u64>,
 }
 
-impl Hash for WebMapNode {
+impl Hash for WebReference {
     fn hash<H: Hasher>(&self, state: &mut H) {
         let host = self.url.host_str();
         let path = self.url.path();
@@ -143,10 +202,10 @@ impl Hash for WebMapNode {
     }
 }
 
-impl WebMapNode {
-    pub fn new(url : Url) -> WebMapNode {
+impl WebReference {
+    pub fn new(url : Url) -> WebReference {
         // GET Response
-        let root_node = WebMapNode {url : url,
+        let root_node = WebReference {url : url,
             references : Vec::new(),
             resources: Vec::new(),
             status : None,
