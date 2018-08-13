@@ -3,9 +3,9 @@
 ## Copyright 2018 Jason Graalum
 Tools and Framework for Organizing and Managing Personal Photos
 
-## This started out as a Class Project for CS561 Open Source Software Development at Portland State University
-## I am continuing it as I would find this tool personally useful.
-## Community Contributions are welcome and encouraged!
+* This started out as a Class Project for CS561 Open Source Software Development at Portland State University
+* I am continuing it as I would find this tool personally useful.
+* Community Contributions are welcome and encouraged!
 
 ## Technical Targets
 1. Organize photos hierarchical by meta-data and/or other data
