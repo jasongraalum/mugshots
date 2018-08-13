@@ -30,7 +30,7 @@
     <session id="-180979794">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.2" value="3" />
@@ -59,12 +59,12 @@
         <counts>
           <entry key="rs" value="98594" />
           <entry key="toml" value="95" />
-          <entry key="txt" value="1524" />
+          <entry key="txt" value="1576" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="1524" />
+          <entry key="PLAIN_TEXT" value="1576" />
           <entry key="Rust" value="98594" />
           <entry key="TOML file" value="95" />
         </counts>
@@ -110,8 +110,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/web_map/tokenizer.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="56" column="4" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
+            <state relative-caret-position="285">
+              <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-end-line="19" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -210,11 +210,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="42" />
     <option name="y" value="23" />
-    <option name="width" value="1878" />
-    <option name="height" value="1057" />
+    <option name="width" value="1238" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -465,7 +465,7 @@
       <workItem from="1533527880443" duration="39325000" />
       <workItem from="1533769701799" duration="21506000" />
       <workItem from="1534022285423" duration="40000" />
-      <workItem from="1534097924253" duration="699000" />
+      <workItem from="1534097924253" duration="2798000" />
     </task>
     <task id="LOCAL-00001" summary="Added web_crawler module - using html5ever crate to parse web page data">
       <created>1533411665315</created>
@@ -576,11 +576,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113922000" />
+    <option name="totallyTimeSpent" value="116021000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="42" y="23" width="1878" height="1057" extended-state="0" />
-    <editor active="true" />
+    <frame x="2091" y="34" width="1878" height="1057" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11764706" />
       <window_info id="Structure" order="1" weight="0.24979185" />
@@ -797,8 +796,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/web_map/tokenizer.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="56" column="4" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
+        <state relative-caret-position="285">
+          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-end-line="19" selection-end-column="26" />
         </state>
       </provider>
     </entry>
