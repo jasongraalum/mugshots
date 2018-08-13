@@ -19,10 +19,11 @@ Tools and Framework for Organizing and Managing Personal Photos
 1. Provide ability to store photos in a variety of locations(local, cloud, etc.)
 2. Use URL based crawler to locate photos in a hierarchical crawl
 
+
 # License
 
-MIT License
 
+MIT License http://opensource.org/licenses/MIT)
 Copyright (c) 2018 Jason Graalum
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -42,3 +43,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+# Contribution
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the MIT license, shall be dual licensed as above, without any additional terms or conditions.
