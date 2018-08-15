@@ -3,9 +3,9 @@
 ## Copyright 2018 Jason Graalum
 Tools and Framework for Organizing and Managing Personal Photos
 
-## This started out as a Class Project for CS561 Open Source Software Development at Portland State University
-## I am continuing it as I would find this tool personally useful.
-## Community Contributions are welcome and encouraged!
+* This started out as a Class Project for CS561 Open Source Software Development at Portland State University
+* I am continuing it as I would find this tool personally useful.
+* Community Contributions are welcome and encouraged!
 
 ## Technical Targets
 1. Organize photos hierarchical by meta-data and/or other data
@@ -19,11 +19,11 @@ Tools and Framework for Organizing and Managing Personal Photos
 1. Provide ability to store photos in a variety of locations(local, cloud, etc.)
 2. Use URL based crawler to locate photos in a hierarchical crawl
 
+
 # License
 
-MIT License
 
-Copyright (c) 2018 Jason Graalum
+MIT License http://opensource.org/licenses/MIT
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -42,3 +42,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+# Contribution
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the MIT license, shall be dual licensed as above, without any additional terms or conditions.
