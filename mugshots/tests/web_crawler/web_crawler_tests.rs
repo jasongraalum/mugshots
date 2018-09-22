@@ -1,10 +1,12 @@
 extern crate reqwest;
-extern crate web_crawler;
+extern crate web_map;
 
 use reqwest::Client;
 use reqwest::StatusCode;
 use reqwest::Url;
 
+// Test taken from reqwest crate examples
+// https://docs.rs/reqwest/0.8.5/reqwest/struct.Response.html
 #[test]
 fn test1() {
     let client = Client::new();
@@ -33,7 +35,7 @@ fn crawl_test1() {
     println!("URL = {:?}", url);
     match url {
         Err(_e) => assert!(false),
-        Ok(u) => println!("{:?}", web_crawler::crawl(u).pop()),
+        Ok(u) => println!("{:?}", web_map::crawl(u).pop()),
     }
 }
 

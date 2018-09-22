@@ -32,5 +32,6 @@ reqwest = "0.8.7"
 url="1.7.1"
 bit-set = "0.4"
 html5ever = "0.22.3"
+web_map = { git = "https://github.com/jasongraalum/web_map" }
 
 

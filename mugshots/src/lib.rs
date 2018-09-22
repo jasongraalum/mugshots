@@ -47,7 +47,6 @@ extern crate url;
 
 pub mod photo;
 pub mod library;
-pub mod web_map;
 
 //
 // Submodule for all functions related to database interface
